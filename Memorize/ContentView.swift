@@ -8,6 +8,7 @@
 import SwiftUI
 
 /**
+ 
  In Swift UI , a struct can have variables and functions and a struct is a composite data types
  Content View is a struct and it  conforms to protocol View (it behaves like a View / functions like a View)
  If you want to behave like a View, you must have a var body which behaves like some View
@@ -15,15 +16,17 @@ import SwiftUI
  the type of this body could be any struct in the world as long as it behaves like a View
  Never have a function more than 20 lines of code ( 12 lines preferrably)
  Views are immutable ( we use state var to change the views)
+ Array out of bounds is a crasher in swift
  */
 struct ContentView: View {
-    
+    let emojis : [String] = ["👻", "🎃", "💀", "🕷️"]
     var body: some View {
         HStack {
-            CardView(isFaceUp: true)
-            CardView(isFaceUp: false)
-            CardView(isFaceUp: true)
-            CardView(isFaceUp: false)
+            // we want a for loop here
+            CardView(content: emojis[0], isFaceUp: true)
+            CardView(content: emojis[1], isFaceUp: false)
+            CardView(content: emojis[2], isFaceUp: true)
+            CardView(content: emojis[3], isFaceUp: false)
         }
         .foregroundColor(Color.orange)
         .padding()
@@ -32,6 +35,7 @@ struct ContentView: View {
 // let is a constant (cannot change once assigned a value)
 // var is a variable
 struct CardView: View {
+    let content: String // let content - because there is no default value for this one
     @State var isFaceUp = false // state variable
     var body: some View {
         ZStack {
@@ -40,7 +44,7 @@ struct CardView: View {
             if isFaceUp {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text("👻").font(.largeTitle)
+                Text(content).font(.largeTitle)
             } else {
                 base.fill() // fill is a default
             }
