@@ -14,38 +14,40 @@ import SwiftUI
  body is a computed property (readonly) - its value gets computed when someone ask for the value of body as it is not a stored value
  the type of this body could be any struct in the world as long as it behaves like a View
  Never have a function more than 20 lines of code ( 12 lines preferrably)
+ Views are immutable ( we use state var to change the views)
  */
 struct ContentView: View {
     
     var body: some View {
         HStack {
             CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            CardView(isFaceUp: false)
+            CardView(isFaceUp: true)
+            CardView(isFaceUp: false)
         }
-        
-        .font(.largeTitle)
         .foregroundColor(Color.orange)
         .padding()
     }
 }
-
+// let is a constant (cannot change once assigned a value)
+// var is a variable
 struct CardView: View {
-    var isFaceUp: Bool = false
+    @State var isFaceUp = false // state variable
     var body: some View {
-        ZStack(content: {
+        ZStack {
+            // type inference in Swift
+            let base = RoundedRectangle(cornerRadius: 12)
             if isFaceUp {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 2)
-                Text("👻")
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
+                Text("👻").font(.largeTitle)
             } else {
-                RoundedRectangle(cornerRadius: 12)
+                base.fill() // fill is a default
             }
-            
-        })
+        }
+        .onTapGesture {
+            isFaceUp.toggle()
+        }
     }
 }
 
