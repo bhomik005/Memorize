@@ -19,15 +19,15 @@ import SwiftUI
  Array out of bounds is a crasher in swift
  */
 struct ContentView: View {
-    let emojis : [String] = ["👻", "🎃", "💀", "🕷️"]
+    let emojis : [String] = ["👻", "🎃", "💀", "🕷️", "🤖", "🚀"]
     var body: some View {
         HStack {
             // we want a for loop here
             // index in - it is an argument to closure
-            ForEach(0..<4, id: \.self ) { index in
-                CardView(content: emojis[index], isFaceUp: true)
+            // emojis.indices - returns the range of array
+            ForEach(emojis.indices, id: \.self ) { index in
+                CardView(content: emojis[index])
             }
-            
         }
         .foregroundColor(Color.orange)
         .padding()
@@ -37,7 +37,7 @@ struct ContentView: View {
 // var is a variable
 struct CardView: View {
     let content: String // let content - because there is no default value for this one
-    @State var isFaceUp = false // state variable
+    @State var isFaceUp = true // state variable
     var body: some View {
         ZStack {
             // type inference in Swift
