@@ -23,10 +23,11 @@ struct ContentView: View {
     var body: some View {
         HStack {
             // we want a for loop here
-            CardView(content: emojis[0], isFaceUp: true)
-            CardView(content: emojis[1], isFaceUp: false)
-            CardView(content: emojis[2], isFaceUp: true)
-            CardView(content: emojis[3], isFaceUp: false)
+            // index in - it is an argument to closure
+            ForEach(0..<4, id: \.self ) { index in
+                CardView(content: emojis[index], isFaceUp: true)
+            }
+            
         }
         .foregroundColor(Color.orange)
         .padding()
